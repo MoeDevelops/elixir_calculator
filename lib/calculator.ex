@@ -35,4 +35,22 @@ defmodule Calculator do
         subtract(num1, num2)
     end
   end
+
+  @spec calculate_string(String.t()) :: number()
+  def calculate_string(expression) do
+    operator =
+      cond do
+        String.contains?(expression, "+") -> "+"
+        String.contains?(expression, "-") -> "-"
+        String.contains?(expression, "*") -> "*"
+        String.contains?(expression, "/") -> "/"
+      end
+
+    splitted_expression = expression |> String.split(operator)
+
+    num1 = splitted_expression |> Enum.at(0) |> String.trim() |> String.to_integer()
+    num2 = splitted_expression |> Enum.at(1) |> String.trim() |> String.to_integer()
+
+    calculate(num1, operator, num2)
+  end
 end
